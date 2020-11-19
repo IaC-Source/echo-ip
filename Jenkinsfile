@@ -5,6 +5,7 @@ podTemplate(
             name: 'jnlp',
             image: 'jenkins/inbound-agent:4.3-4',
             args: '${computer.jnlpmac} ${computer.name}'
+            )
     ],
     volumes: [
         hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
