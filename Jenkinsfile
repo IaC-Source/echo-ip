@@ -1,12 +1,5 @@
 podTemplate(
     serviceAccount: 'jenkins',
-    containers: [
-        containerTemplate(
-            name: 'agent',
-            image: 'busybox',
-            command: 'cat'
-        )
-    ],
     volumes: [
         hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
         hostPathVolume(mountPath: '/bin/docker', hostPath: '/bin/docker'),
