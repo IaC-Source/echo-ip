@@ -8,8 +8,8 @@ podTemplate(
         )
     ],
     volumes: [
-        hostPathVolume(mountPath: '/var/run/docker.sock', hostPath:'/var/run/docker.sock'),
-        hostPathVolume(mountPath: '/bin/docker', hostPath:' /bin/docker'),
+        hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+        hostPathVolume(mountPath: '/bin/docker', hostPath: '/bin/docker'),
         hostPathVolume(mountPath: '/usr/bin/kubectl', hostPath: '/usr/bin/kubectl')
     ]
 )
