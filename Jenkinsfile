@@ -17,7 +17,7 @@ podTemplate(
 {
     node(POD_LABEL) {
         stage('git scm update') {
-            git 'https://github.com/iac-source/echo-ip.git'
+            git url: 'https://github.com/IaC-Source/dashboard-deploy.git', branch: 'main'
         }
         stage('docker build and push') {
             '''sh
