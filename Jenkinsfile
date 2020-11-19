@@ -1,0 +1,35 @@
+podTemplate(
+    serviceAccount: 'jenkins',
+    containers: [
+        containerTemplate(
+            name: 'agent',
+            image: 'busybox',
+            command: 'cat'
+        )
+    ],
+    volumes: [
+        hostPathVolume(mountPath: '/var/run/docker.sock', hostPath:'/var/run/docker.sock'),
+        hostPathVolume(mountPath: '/bin/docker', hostPath:' /bin/docker'),
+        hostPathVolume(mountPath: '/usr/bin/kubectl', hostPath: '/usr/bin/kubectl')
+    ]
+)
+
+{
+    node(POD_LABEL) {
+        stage('git scm update') {
+            git 'https://github.com/iac-source/echo-ip.git'
+        }
+        stage('docker build and push') {
+            '''sh
+            docker build -t 192.168.1.10:8443/echo-ip:latest .
+            docker push 192.168.1.10:8443/echo-ip:latest
+            '''
+        }
+        stage('deploy kubernetes') {
+            '''sh
+            kubectl create deployment echo-ip --image=192.168.1.10:8443/echo-ip:latest
+            kubectl expose deployment echo-ip --type=LoadBalancer --port=8080 --target-port=80
+            '''
+        }
+    }
+}
