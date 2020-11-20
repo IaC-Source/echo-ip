@@ -16,7 +16,7 @@ podTemplate(
             git url: 'https://github.com/IaC-Source/echo-ip.git', branch: 'main'
         }
         stage('docker build and push') {
-            containers("docker") {
+            container("docker") {
                 sh'''
                 docker build -t 192.168.1.10:8443/echo-ip:latest .
                 docker push 192.168.1.10:8443/echo-ip:latest
