@@ -20,13 +20,13 @@ podTemplate(
             git url: 'https://github.com/IaC-Source/echo-ip.git', branch: 'main'
         }
         stage('docker build and push') {
-            '''sh
+            sh'''
             docker build -t 192.168.1.10:8443/echo-ip:latest .
             docker push 192.168.1.10:8443/echo-ip:latest
             '''
         }
         stage('deploy kubernetes') {
-            '''sh
+            sh'''
             kubectl create deployment echo-ip --image=192.168.1.10:8443/echo-ip:latest
             kubectl expose deployment echo-ip --type=LoadBalancer --port=8080 --target-port=80
             '''
