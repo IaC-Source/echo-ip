@@ -8,7 +8,7 @@ pipeline {
     }
     stage('docker build and push') {
       steps {
-        sh'''
+        sh '''
         docker build -t 192.168.1.10:8443/echo-ip .
         docker push 192.168.1.10:8443/echo-ip
         '''
@@ -16,7 +16,7 @@ pipeline {
     }
     stage('deploy kubernetes') {
       steps {
-        sh'''
+        sh '''
         kubectl create deployment pl-bulk-prod --image=192.168.1.10:8443/echo-ip
         kubectl expose deployment pl-bulk-prod --type=LoadBalancer --port=8080 \
                                                --target-port=80 --name=pl-bulk-prod-svc
